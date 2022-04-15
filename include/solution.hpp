@@ -3,8 +3,6 @@
 #include <iostream>
 #include <string>
 
-using namespace std;
-
 struct Result{
     double result;
     bool error;
