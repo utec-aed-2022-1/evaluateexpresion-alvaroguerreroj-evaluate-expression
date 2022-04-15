@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <string>
 
 using namespace std;
 
@@ -10,7 +11,7 @@ struct Result{
 }
 
 
-Result evaluate(string input)
+Result evaluate(std::string input)
 {
     // 1- descomponer el input y validar
 
