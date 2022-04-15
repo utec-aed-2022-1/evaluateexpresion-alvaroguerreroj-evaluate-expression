@@ -9,7 +9,7 @@ struct Result
     bool error;
 };
 
-Result evaluate(std::string input)
+auto evaluate(std::string input) -> Result
 {
     // 1- descomponer el input y validar
 
