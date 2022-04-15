@@ -1,0 +1,13 @@
+# -*- mode: yaml; -*-
+Checks: >-
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  concurrency-*,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-owning-memory,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-*
