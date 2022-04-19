@@ -4,6 +4,7 @@ with pkgs;
 
 mkShell {
   buildInputs = [
+    catch2
   ];
 
   nativeBuildInputs = [
