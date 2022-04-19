@@ -5,6 +5,7 @@ with pkgs;
 mkShell {
   buildInputs = [
     catch2
+    microsoft_gsl
   ];
 
   nativeBuildInputs = [
