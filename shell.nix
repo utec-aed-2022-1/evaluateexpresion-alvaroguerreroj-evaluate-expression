@@ -4,6 +4,9 @@ with pkgs;
 
 mkShell {
   buildInputs = [
+  ];
+
+  nativeBuildInputs = [
     clang_14
     gcc
 
@@ -17,6 +20,4 @@ mkShell {
     meson
     ninja
   ];
-
-  nativeBuildInputs = [ clang_14 ];
 }
