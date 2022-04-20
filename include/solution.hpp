@@ -17,6 +17,15 @@ using eval_container = CircularList<T>;
 using symbol = std::variant<double, char>;
 using function_double = std::function<double(double, double)>;
 
+// From: https://www.cppstories.com/2019/02/2lines3featuresoverload.html/
+template<class... Ts>
+struct overload : Ts...
+{
+    using Ts::operator()...;
+};
+template<class... Ts>
+overload(Ts...) -> overload<Ts...>;
+
 struct Result
 {
     double result;
@@ -72,21 +81,22 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         right_par
     };
 
-    static auto symbol_type = [](symbol s) {
-        if (std::holds_alternative<double>(s))
-        {
-            return symbol_types::number;
-        }
-
-        switch (std::get<char>(s))
-        {
-        case '(':
-            return symbol_types::left_par;
-        case ')':
-            return symbol_types::right_par;
-        default:
-            return symbol_types::op;
-        }
+    static auto symbol_type = [](symbol v) {
+        return std::visit(
+            overload{
+                [](double) { return symbol_types::number; },
+                [](char c) {
+                    switch (c)
+                    {
+                    case '(':
+                        return symbol_types::left_par;
+                    case ')':
+                        return symbol_types::right_par;
+                    default:
+                        return symbol_types::op;
+                    };
+                }},
+            v);
     };
 
     if (b == e)
