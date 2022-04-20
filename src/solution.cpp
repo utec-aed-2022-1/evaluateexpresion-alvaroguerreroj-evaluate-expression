@@ -71,22 +71,31 @@ auto evaluate(container<symbol> const& cn) -> Result
     container<double> result;
     for (auto const& e : cn)
     {
-        if (std::holds_alternative<double>(e))
+        try
         {
-            result.push_back(std::get<double>(e));
+            std::visit(
+                overload{
+                    [&result](double d) { result.push_back(d); },
+                    [&result](char c) {
+                        if (result.size() < 2)
+                        {
+                            throw EvalError();
+                        }
+                        else
+                        {
+                            double a1 = result.back();
+                            result.pop_back();
+                            double a2 = result.back();
+                            result.pop_back();
+
+                            result.push_back(get_operator(c).fn(a2, a1));
+                        }
+                    }},
+                e);
         }
-        else if (result.size() < 2)
+        catch (EvalError&)
         {
             return {0, true};
-        }
-        else
-        {
-            double a1 = result.back();
-            result.pop_back();
-            double a2 = result.back();
-            result.pop_back();
-
-            result.push_back(get_operator(std::get<char>(e)).fn(a2, a1));
         }
     }
 
