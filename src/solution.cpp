@@ -6,7 +6,6 @@
 #include <sstream>
 #include <string>
 #include <variant>
-#include <vector>
 
 #include "solution.hpp"
 
@@ -28,11 +27,11 @@ auto next_token(std::istringstream& in) -> symbol
     return char(in.get());
 }
 
-auto tokenize(std::string const& input) -> std::vector<symbol>
+auto tokenize(std::string const& input) -> eval_container<symbol>
 {
     std::istringstream in{input};
 
-    std::vector<symbol> ret;
+    eval_container<symbol> ret;
 
     while (in >> std::ws, !in.eof())
     {
@@ -109,7 +108,7 @@ auto operator<<(std::ostream& out, std::variant<double, char> const& v) -> std::
     return out;
 }
 
-auto operator<<(std::ostream& out, std::vector<std::variant<double, char>> const& v)
+auto operator<<(std::ostream& out, eval_container<std::variant<double, char>> const& v)
     -> std::ostream&
 {
     out << "{ ";

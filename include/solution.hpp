@@ -10,6 +10,9 @@
 #include <variant>
 #include <vector>
 
+template<class T>
+using eval_container = std::vector<T>;
+
 using symbol = std::variant<double, char>;
 using function_double = std::function<double(double, double)>;
 
@@ -61,7 +64,7 @@ public:
 };
 
 auto evaluate(std::string const& input) -> Result;
-auto tokenize(std::string const& input) -> std::vector<symbol>;
+auto tokenize(std::string const& input) -> eval_container<symbol>;
 
 template<template<typename...> typename container, typename ForwardIterator>
 auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
@@ -91,8 +94,8 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         }
     };
 
-    std::vector<symbol> postfix;
-    std::vector<char> ops;
+    eval_container<symbol> postfix;
+    eval_container<char> ops;
 
     if (b == e)
     {
@@ -187,7 +190,7 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
     return postfix;
 }
 
-template<template<typename...> typename result_container = std::vector,
+template<template<typename...> typename result_container = eval_container,
     template<typename...> typename container>
 auto infix_to_postfix(container<symbol> const& cn) -> result_container<symbol>
 {
@@ -195,5 +198,5 @@ auto infix_to_postfix(container<symbol> const& cn) -> result_container<symbol>
 }
 
 auto operator<<(std::ostream& out, std::variant<double, char> const& v) -> std::ostream&;
-auto operator<<(std::ostream& out, std::vector<std::variant<double, char>> const& v)
+auto operator<<(std::ostream& out, eval_container<std::variant<double, char>> const& v)
     -> std::ostream&;
