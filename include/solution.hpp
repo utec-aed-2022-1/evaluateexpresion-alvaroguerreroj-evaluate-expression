@@ -116,12 +116,7 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
     for (; it != e; it++)
     {
         auto s_type = symbol_type(*it);
-
-        // FIXME: This is a hotfix, `std::prev` should work.
-        auto it_prev = it;
-        it_prev--;
-
-        auto prev_s_type = symbol_type(*it_prev);
+        auto prev_s_type = symbol_type(*std::prev(it));
 
         if (s_type == number)
         {
