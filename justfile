@@ -5,6 +5,9 @@ build_dir := "build/"
 build: _build_exists
     meson compile -C {{build_dir}}
 
+test: _build_exists
+    meson test -C {{build_dir}}
+
 setup *args:
     meson setup {{args}} {{build_dir}}
 
