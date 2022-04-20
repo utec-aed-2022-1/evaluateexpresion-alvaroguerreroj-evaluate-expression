@@ -15,6 +15,7 @@ mkShell {
     gdb
     cgdb
 
+    cmake
     just
     meson
     ninja
