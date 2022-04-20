@@ -42,7 +42,7 @@ auto tokenize(std::string const& input) -> std::vector<symbol>
     return ret;
 }
 
-template<template<typename...> typename container = std::vector>
+template<template<typename...> typename container>
 auto evaluate(container<symbol> const& cn) -> Result
 {
     if (cn.empty())
