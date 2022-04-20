@@ -64,7 +64,7 @@ auto tokenize(std::string const& input) -> eval_container<symbol>;
 template<template<typename...> typename container, typename ForwardIterator>
 auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
 {
-    enum symbol_types
+    enum class symbol_types
     {
         number,
         op,
@@ -75,17 +75,17 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
     auto symbol_type = [](symbol s) {
         if (std::holds_alternative<double>(s))
         {
-            return number;
+            return symbol_types::number;
         }
 
         switch (std::get<char>(s))
         {
         case '(':
-            return left_par;
+            return symbol_types::left_par;
         case ')':
-            return right_par;
+            return symbol_types::right_par;
         default:
-            return op;
+            return symbol_types::op;
         }
     };
 
@@ -118,9 +118,9 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         auto s_type = symbol_type(*it);
         auto prev_s_type = symbol_type(*std::prev(it));
 
-        if (s_type == number)
+        if (s_type == symbol_types::number)
         {
-            if (prev_s_type == number || prev_s_type == right_par)
+            if (prev_s_type == symbol_types::number || prev_s_type == symbol_types::right_par)
             {
                 throw InfixError();
             }
@@ -131,18 +131,18 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         {
             char c = std::get<char>(*it);
 
-            if (s_type == left_par)
+            if (s_type == symbol_types::left_par)
             {
-                if (prev_s_type == number || prev_s_type == right_par)
+                if (prev_s_type == symbol_types::number || prev_s_type == symbol_types::right_par)
                 {
                     throw InfixError();
                 }
 
                 ops.push_back(c);
             }
-            else if (s_type == right_par)
+            else if (s_type == symbol_types::right_par)
             {
-                if (prev_s_type == op || prev_s_type == left_par)
+                if (prev_s_type == symbol_types::op || prev_s_type == symbol_types::left_par)
                 {
                     throw InfixError();
                 }
@@ -155,7 +155,7 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
             }
             else
             {
-                if (prev_s_type == op || prev_s_type == left_par)
+                if (prev_s_type == symbol_types::op || prev_s_type == symbol_types::left_par)
                 {
                     throw InfixError();
                 }
