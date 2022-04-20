@@ -72,7 +72,7 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         right_par
     };
 
-    auto symbol_type = [](symbol s) {
+    static auto symbol_type = [](symbol s) {
         if (std::holds_alternative<double>(s))
         {
             return symbol_types::number;
