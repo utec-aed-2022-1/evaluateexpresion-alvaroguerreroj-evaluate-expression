@@ -89,13 +89,13 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         }
     };
 
-    container<symbol> postfix;
-    container<char> ops;
-
     if (b == e)
     {
         throw InfixError();
     }
+
+    container<symbol> postfix;
+    container<char> ops;
 
     auto prev_s_type = symbol_types::left_par;
     for (auto it = b; it != e; it++)
