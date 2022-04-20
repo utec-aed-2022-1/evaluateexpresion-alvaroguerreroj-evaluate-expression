@@ -2,12 +2,31 @@
 #include <functional>
 #include <istream>
 #include <iterator>
-#include <map>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 #include <variant>
 
 #include "solution.hpp"
+
+auto get_operator(char c) -> Operator
+{
+    switch (c)
+    {
+    case '*':
+        return {1, [](double a, double b) { return a * b; }};
+    case '/':
+        return {1, [](double a, double b) { return a / b; }};
+    case '+':
+        return {2, [](double a, double b) { return a + b; }};
+    case '-':
+        return {2, [](double a, double b) { return a - b; }};
+    case '(':
+        return {99, [](double, double) { return double{}; }};
+    default:
+        throw std::runtime_error("Character not found");
+    };
+}
 
 auto read_double(std::istringstream& in) -> double
 {
@@ -67,7 +86,7 @@ auto evaluate(container<symbol> const& cn) -> Result
             double a2 = result.back();
             result.pop_back();
 
-            result.push_back(operators.at(std::get<char>(e)).fn(a2, a1));
+            result.push_back(get_operator(std::get<char>(e)).fn(a2, a1));
         }
     }
 

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <functional>
-#include <map>
 #include <ostream>
 #include <sstream>
 #include <stdexcept>
@@ -48,13 +47,7 @@ struct Operator
     }
 };
 
-std::map<char, Operator> const operators = {
-    {'*', {1, [](double a, double b) { return a * b; }}},
-    {'/', {1, [](double a, double b) { return a / b; }}},
-    {'+', {2, [](double a, double b) { return a + b; }}},
-    {'-', {2, [](double a, double b) { return a - b; }}},
-    {'(', {99, [](double, double) { return double{}; }}}
-};
+auto get_operator(char c) -> Operator;
 
 class InfixError : public std::exception
 {
@@ -172,12 +165,12 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
                     throw InfixError();
                 }
 
-                Operator const& cur_op = operators.at(c);
+                Operator const& cur_op = get_operator(c);
                 char prev_op = 0;
 
                 while (!ops.empty()
                        && (prev_op = ops.back(),
-                           operators.at(prev_op).precedence <= cur_op.precedence))
+                           get_operator(prev_op).precedence <= cur_op.precedence))
                 {
                     postfix.emplace_back(ops.back());
                     ops.pop_back();
