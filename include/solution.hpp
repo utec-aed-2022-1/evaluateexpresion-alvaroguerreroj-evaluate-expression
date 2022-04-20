@@ -10,6 +10,8 @@
 #include <variant>
 #include <vector>
 
+#include "circular.hpp"
+
 template<class T>
 using eval_container = std::vector<T>;
 

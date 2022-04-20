@@ -7,7 +7,7 @@ project('lists', 'cpp',
                            'werror=true'
                           ])
 
-inc = include_directories('include')
+inc = include_directories('include', 'lists-alvaroguerreroj-lists/include')
 
 subdir('include')
 subdir('src')
