@@ -97,26 +97,10 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         throw InfixError();
     }
 
-    auto it = b;
-    if (std::holds_alternative<double>(*it))
-    {
-        postfix.push_back(*it);
-    }
-    else if (*it == symbol('('))
-    {
-        ops.push_back(std::get<char>(*it));
-    }
-    else
-    {
-        throw InfixError();
-    }
-
-    it++;
-
-    for (; it != e; it++)
+    auto prev_s_type = symbol_types::left_par;
+    for (auto it = b; it != e; it++)
     {
         auto s_type = symbol_type(*it);
-        auto prev_s_type = symbol_type(*std::prev(it));
 
         if (s_type == symbol_types::number)
         {
@@ -174,6 +158,8 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
                 ops.push_back(c);
             }
         }
+
+        prev_s_type = s_type;
     }
 
     while (!ops.empty())
