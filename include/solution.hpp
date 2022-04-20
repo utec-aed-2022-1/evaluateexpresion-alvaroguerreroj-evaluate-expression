@@ -89,8 +89,8 @@ auto infix_to_postfix(ForwardIterator b, ForwardIterator e) -> container<symbol>
         }
     };
 
-    eval_container<symbol> postfix;
-    eval_container<char> ops;
+    container<symbol> postfix;
+    container<char> ops;
 
     if (b == e)
     {
