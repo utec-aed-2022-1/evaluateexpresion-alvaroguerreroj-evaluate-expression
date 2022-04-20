@@ -19,5 +19,6 @@ mkShell {
     just
     meson
     ninja
+    pkg-config
   ];
 }
