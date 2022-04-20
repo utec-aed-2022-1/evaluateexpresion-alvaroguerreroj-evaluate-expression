@@ -181,15 +181,16 @@ auto infix_to_postfix(std::vector<symbol> const& vs) -> std::vector<symbol>
     return postfix;
 }
 
-auto evaluate(std::vector<symbol> const& vs) -> Result
+template<template<typename...> typename container = std::vector>
+auto evaluate(container<symbol> const& cn) -> Result
 {
-    if (vs.empty())
+    if (cn.empty())
     {
         return {0, true};
     }
 
-    std::vector<double> result;
-    for (auto const& e : vs)
+    container<double> result;
+    for (auto const& e : cn)
     {
         if (std::holds_alternative<double>(e))
         {
