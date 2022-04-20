@@ -67,6 +67,15 @@ public:
     }
 };
 
+class EvalError : public std::exception
+{
+public:
+    [[nodiscard]] auto what() const noexcept -> char const* override
+    {
+        return "EvalError";
+    }
+};
+
 auto evaluate(std::string const& input) -> Result;
 auto tokenize(std::string const& input) -> eval_container<symbol>;
 
