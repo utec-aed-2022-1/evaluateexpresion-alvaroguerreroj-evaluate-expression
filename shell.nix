@@ -3,10 +3,7 @@
 with pkgs;
 
 mkShell {
-  buildInputs = [
-    catch2
-    microsoft_gsl
-  ];
+  buildInputs = [ catch2 microsoft_gsl ];
 
   nativeBuildInputs = [
     clang_14
