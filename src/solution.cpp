@@ -60,8 +60,6 @@ auto tokenize(std::string const& input) -> std::vector<symbol>
 
 auto infix_to_postfix(std::vector<symbol> const& vs) -> std::vector<symbol>
 {
-    using std::prev;
-
     enum symbol_types
     {
         number,
@@ -114,7 +112,7 @@ auto infix_to_postfix(std::vector<symbol> const& vs) -> std::vector<symbol>
     for (; it != vs.cend(); it++)
     {
         auto s_type = symbol_type(*it);
-        auto prev_s_type = symbol_type(*prev(it));
+        auto prev_s_type = symbol_type(*std::prev(it));
 
         if (s_type == number)
         {
