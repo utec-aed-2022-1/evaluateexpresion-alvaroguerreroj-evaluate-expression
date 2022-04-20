@@ -13,7 +13,7 @@
 #include "circular.hpp"
 
 template<class T>
-using eval_container = std::vector<T>;
+using eval_container = CircularList<T>;
 
 using symbol = std::variant<double, char>;
 using function_double = std::function<double(double, double)>;
