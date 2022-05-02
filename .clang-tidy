@@ -1,0 +1,18 @@
+# -*- mode: yaml; -*-
+Checks: >-
+  -*,
+  bugprone-*,
+  clang-analyzer-*,
+  concurrency-*,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-avoid-magic-numbers,
+  misc-*,
+  modernize-*,
+  performance-*,
+  portability-*,
+  readability-,
+  -readability-magic-numbers
+CheckOptions:
+  - key: misc-non-private-member-variables-in-classes.IgnoreClassesWithAllMemberVariablesBeingPublic
+    value: true
